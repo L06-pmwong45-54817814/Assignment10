@@ -1,0 +1,63 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.6/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.16/addons/p5.sound.js"></script>
+  <script>
+
+  var bgmusic, amplitude, cnv;
+  var z = 10;
+  var p = 600;
+
+  function preload(){
+   bgmusic = loadSound("song.mp3");
+   zebra = loadImage("ZEBRA1.png");
+   zebra2 = loadImage("ZEBRA.png");
+   guitar = loadImage("guitar.png");
+   title = loadImage("title.png");
+  }
+
+  function setup() {
+    cnv = createCanvas(600,400);
+    bgmusic.play();
+    amplitude = new p5.Amplitude();
+    amplitude.setInput(bgmusic);
+    frameRate(20);
+
+     //start / stop the sound when canvas is clicked
+    cnv.mouseClicked(function() {
+      if (bgmusic.isPlaying() ){
+        bgmusic.pause();
+      } else {
+        bgmusic.play();
+      }
+    });
+  }
+
+  function draw() {
+    background(255);
+    var level = amplitude.getLevel();
+    var size = map(level, 0, 1, 0, 200);
+    for (var x = 10; x < width-20; x += 20) {
+    var a = random(50,70);
+    fill(0);
+    rect(x, 0, 1, size + a);
+  }
+    image(zebra2,p,140,367/5,384/5);
+    p=p-1;
+    if(p<-200) {
+    p = width;
+  }
+
+    image(zebra,z,200,367/4,384/4);
+    z++;
+    if (z>600+367/4) {
+    z = -367/4;
+}
+    image(guitar,width-896/2.5,height-764/3,896/2.5,764/2.5);
+    image(title,10,height-75,150,75);
+  }
+
+  </script>
+</head>
+</html>
